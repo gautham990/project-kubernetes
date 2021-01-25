@@ -8,14 +8,26 @@ metadata:
 spec:
   template:
     metadata:
-      name: nginx-pod
+      name: web
       labels:
         type: front-end
         region: prod
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
-      - name: nginx-container
-        image: nginx
+      - name: web
+        image: gautham990/devops:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 256Mi
+            cpu: 300m
   replicas: 2
   selector:
     matchLabels:
